@@ -1,0 +1,50 @@
+:root {
+    --white   : #ffffff;
+    --grey-800: #dfdfe7;
+    --grey-800: #bfbfcf;
+    --grey-700: #9191a0;
+    --grey-600: #70707d;
+    --grey-500: #66666a;
+    --grey-400: #575762;
+    --grey-300: #3f3f48;
+    --grey-200: #2a2a31;
+    --grey-100: #121215;
+    --black   : #000000;
+
+    --green-700: #66e79c;
+    --green-500: #1ada6a;
+}
+
+:focus {
+    outline      : transparent;
+    box-shadow   : 0 0 0 2px var(--green-700);
+    border-radius: 0.5rem;
+    padding      : 0.5rem;
+    transition   : 0.2s;
+}
+
+@font-face {
+    font-family: 'Montserrat', sans-serif;
+    src        : url('https://fonts.googleapis.com/css2?family=Rubik&display=swap')
+}
+
+* {
+    padding   : 0;
+    margin    : 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color      : var(--grey-100);
+    color                 : var(--grey-700);
+    -webkit-font-smoothing: antialiased;
+}
+
+body,
+textarea,
+input,
+button {
+    font-family: 'Montserrat', sans-serif;
+    font-size  : 1rem;
+    font-weight: 200;
+}
