@@ -1,29 +1,54 @@
+import { format, formatDistanceToNow } from 'date-fns'
+import ptBR from 'date-fns/locale/pt-BR'
+
 import { Avatar } from './avatar';
 import { Comment } from './Comment';
 import styles from './Post.module.css';
 
-export function Post(props) {
+export function Post({ author, published, content }) {
+
+    const publishedDate = format(published, "d 'de' LLLL 'de' Y 'às' HH:mm'h'", {
+        locale: ptBR
+    })
+
+    const publishedSince = formatDistanceToNow(published, {
+        locale: ptBR,
+        addSuffix: true
+    })
+
     return (
         <article className={styles.post}>
             <header>
                 <div className={styles.author}>
-                    <Avatar hasBorder src="./src/img/profile.webp" />
+                    <Avatar hasBorder src={author.picture} />
                     <div className={styles.authorInfo}>
-                        <strong>{props.author}</strong>
-                        <span>{props.cargo}</span>
+                        <strong>{author.name}</strong>
+                        <span>{cargo.role}</span>
                     </div>
                 </div>
-                <time title='14 de Julho de 2022 às 22:50' dateTime='2022-07-14 22:50:00'>Publicado há 1h</time>
+                <time title={publishedDate} dateTime={published.toISOString()}>
+                    {publishedSince}
+                </time>
             </header>
 
             <div className={styles.content}>
-                <p>
-                    <a href="#">Clique Aqui</a>
-                </p>
-                <p>
-                    <a href="#">#aqui </a>
-                    <a href="#">#ali </a>
-                </p>
+                {content.map(line => {
+                    if (line.type === 'paragraph') {
+                        return (
+                            <p>
+                                {line.content}
+                            </p>
+                        )
+                    } else if (line.type === 'link') {
+                        return (
+                            <p>
+                                <a href='#'>
+                                    {line.content}
+                                </a>
+                            </p>
+                        )
+                    }
+                })}
             </div>
 
             <form className={styles.comments}>
