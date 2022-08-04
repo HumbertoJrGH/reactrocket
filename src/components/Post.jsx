@@ -1,12 +1,14 @@
-import style from './Post.module.css';
+import { Avatar } from './avatar';
+import { Comment } from './Comment';
+import styles from './Post.module.css';
 
 export function Post(props) {
     return (
-        <article className={style.post}>
+        <article className={styles.post}>
             <header>
-                <div className={style.author}>
-                    <img className={style.avatar} src="./src/img/profile.webp" />
-                    <div className={style.authorInfo}>
+                <div className={styles.author}>
+                    <Avatar hasBorder src="./src/img/profile.webp" />
+                    <div className={styles.authorInfo}>
                         <strong>{props.author}</strong>
                         <span>{props.cargo}</span>
                     </div>
@@ -14,7 +16,7 @@ export function Post(props) {
                 <time title='14 de Julho de 2022 às 22:50' dateTime='2022-07-14 22:50:00'>Publicado há 1h</time>
             </header>
 
-            <div className={style.content}>
+            <div className={styles.content}>
                 <p>
                     <a href="#">Clique Aqui</a>
                 </p>
@@ -24,7 +26,7 @@ export function Post(props) {
                 </p>
             </div>
 
-            <form className={style.comments}>
+            <form className={styles.comments}>
                 <strong>Deixe seu feedback</strong>
                 <textarea
                     placeholder='deixe o seu comentário'
@@ -33,6 +35,12 @@ export function Post(props) {
                     <button>Comentar</button>
                 </footer>
             </form>
+
+            <div className={styles.commentList}>
+                <Comment />
+                <Comment />
+                <Comment />
+            </div>
         </article>
     );
 }
