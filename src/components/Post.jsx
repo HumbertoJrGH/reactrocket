@@ -1,11 +1,16 @@
 import { format, formatDistanceToNow } from 'date-fns'
+import { id } from 'date-fns/locale';
 import ptBR from 'date-fns/locale/pt-BR'
+import { useState } from 'react';
 
 import { Avatar } from './avatar';
 import { Comment } from './Comment';
 import styles from './Post.module.css';
 
 export function Post({ author, published, content }) {
+    const [comments, setComments] = useState([])
+
+    const [newComment, setNewComment] = useState('')
 
     const publishedDate = format(published, "d 'de' LLLL 'de' Y 'às' HH:mm'h'", {
         locale: ptBR
@@ -16,6 +21,36 @@ export function Post({ author, published, content }) {
         addSuffix: true
     })
 
+
+    function deleteComment(comment) {
+        console.log(`Deletar ${comment}`)
+        setComments()
+    }
+
+    function handleNewComment(event) {
+        event.preventDefault()
+        setComments([...comments, newComment])
+        setNewComment('')
+    }
+
+    function handleNewCommentChange(event) {
+        event.target.setCustomValidity("")
+        setNewComment(event.target.value)
+    }
+    
+    function deleteComment(targetComment) {
+        const newCommentList = comments.filter(comment => {
+            return comment != targetComment
+        })
+        setComments(newCommentList)
+    }
+
+    function handleNewCommentInvalid(event) {
+        event.target.setCustomValidity("Preencha seu comentário")
+    }
+
+    const isNewCommentPermitted = newComment.length == 0
+
     return (
         <article className={styles.post}>
             <header>
@@ -23,7 +58,7 @@ export function Post({ author, published, content }) {
                     <Avatar hasBorder src={author.picture} />
                     <div className={styles.authorInfo}>
                         <strong>{author.name}</strong>
-                        <span>{cargo.role}</span>
+                        <span>{author.role}</span>
                     </div>
                 </div>
                 <time title={publishedDate} dateTime={published.toISOString()}>
@@ -32,16 +67,16 @@ export function Post({ author, published, content }) {
             </header>
 
             <div className={styles.content}>
-                {content.map(line => {
+                {content.map((line, i) => {
                     if (line.type === 'paragraph') {
                         return (
-                            <p>
+                            <p key={i}>
                                 {line.content}
                             </p>
                         )
                     } else if (line.type === 'link') {
                         return (
-                            <p>
+                            <p key={i}>
                                 <a href='#'>
                                     {line.content}
                                 </a>
@@ -51,20 +86,25 @@ export function Post({ author, published, content }) {
                 })}
             </div>
 
-            <form className={styles.comments}>
+            <form onSubmit={handleNewComment} className={styles.comments}>
                 <strong>Deixe seu feedback</strong>
                 <textarea
+                    name='comment'
                     placeholder='deixe o seu comentário'
+                    onChange={handleNewCommentChange}
+                    value={newComment}
+                    onInvalid={handleNewCommentInvalid}
+                    required
                 />
                 <footer>
-                    <button>Comentar</button>
+                    <button role="submit" disabled={isNewCommentPermitted}>Comentar</button>
                 </footer>
             </form>
 
             <div className={styles.commentList}>
-                <Comment />
-                <Comment />
-                <Comment />
+                {comments.map(comment => {
+                    return(<Comment key={comment} content={comment} onDeleteComment={deleteComment} />)
+                })}
             </div>
         </article>
     );

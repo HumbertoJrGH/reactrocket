@@ -16,9 +16,9 @@ const posts = [
     },
     published: new Date("2022-08-01 18:03:53"),
     content: [
-      {type: "paragraph", content: "Vincenzo, onde está você?"},
-      {type: "paragraph", content: "Passei a noite toda cozinhando um pato com vinho."},
-      {type: "link", content: "clique"}
+      { type: "paragraph", content: "Vincenzo, onde está você?" },
+      { type: "paragraph", content: "Passei a noite toda cozinhando um pato com vinho." },
+      { type: "link", content: "clique" }
     ],
   },
   {
@@ -30,9 +30,9 @@ const posts = [
     },
     published: new Date("2022-08-01 19:13:15"),
     content: [
-      {type: "paragraph", content: "Vincenzo, onde está você?"},
-      {type: "paragraph", content: "Passei a noite toda cozinhando um pato com vinho."},
-      {type: "link", content: "clique"}
+      { type: "paragraph", content: "Vincenzo, onde está você?" },
+      { type: "paragraph", content: "Passei a noite toda cozinhando um pato com vinho." },
+      { type: "link", content: "clique" }
     ],
   },
   {
@@ -44,9 +44,9 @@ const posts = [
     },
     published: new Date("2022-08-01 20:47:17"),
     content: [
-      {type: "paragraph", content: "Vincenzo, onde está você?"},
-      {type: "paragraph", content: "Passei a noite toda cozinhando um pato com vinho."},
-      {type: "link", content: "clique"}
+      { type: "paragraph", content: "Vincenzo, onde está você?" },
+      { type: "paragraph", content: "Passei a noite toda cozinhando um pato com vinho." },
+      { type: "link", content: "clique" }
     ],
   },
 ]
@@ -62,6 +62,7 @@ function App() {
           {posts.map(post => {
             return (
               <Post
+                key={post.id}
                 author={post.author}
                 content={post.content}
                 published={post.published}
